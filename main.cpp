@@ -88,11 +88,10 @@ public:
         {
             if (y >= j_p.y && y <= j_p.y + screenHeight / 4)
             {
-                std::cout << "igaz" << std::endl;
                 speedX *= -1;
             }
 
-            else if (x > screenWidth + 31)
+            else if (x > screenWidth + 12)
             {
                 CloseWindow();
             }
@@ -105,7 +104,7 @@ public:
                 speedX *= -1;
             }
 
-            else if (x < -6)
+            else if (x < -12)
             {
                 CloseWindow();
             }
@@ -144,6 +143,7 @@ int main()
         j_p.Move();
         b.Draw();
         b.Move(b_p, j_p);
+        DrawLine(screenWidth/2, 0, screenWidth/2, screenHeight, WHITE);
         EndDrawing();
     }
 
