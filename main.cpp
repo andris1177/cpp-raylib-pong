@@ -60,8 +60,8 @@ class Ball
 public:
     int x;
     int y;
-    int speedX = 3;
-    int speedY = 3;
+    int speedX = 4;
+    int speedY = 4;
     int screenWidth;
     int screenHeight;
     Ball(int width, int height)
@@ -84,30 +84,31 @@ public:
         y += speedY;
         std::cout << "x: " << x << " " << "y: " <<  y << "jobb padel y: " << j_p.y << std::endl;
         
-        if (x > screenWidth && x < screenWidth + 60)
+        if (x > screenWidth)
         {
-            if (y >= j_p.y || y <= j_p.y + screenHeight / 4)
+            if (y >= j_p.y && y <= j_p.y + screenHeight / 4)
             {
+                std::cout << "igaz" << std::endl;
                 speedX *= -1;
             }
-        }
 
-        else if (x > screenWidth + 70)
-        {
-            CloseWindow();
+            else if (x > screenWidth + 31)
+            {
+                CloseWindow();
+            }
         }
 
         if (x < 0)
         {
-            if (y >= b_p.y || y <= b_p.y + screenHeight / 4)
+            if (y >= b_p.y && y <= b_p.y + screenHeight / 4)
             {
                 speedX *= -1;
             }
-        }
 
-        else if (x > screenWidth + 70)
-        {
-            CloseWindow();
+            else if (x < -6)
+            {
+                CloseWindow();
+            }
         }
 
         if (y > screenHeight)
