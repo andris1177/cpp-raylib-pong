@@ -82,9 +82,22 @@ public:
     {
         x += speedX;
         y += speedY;
-        std::cout << "x: " << x << " " << "y: " <<  y << std::endl;
+        std::cout << "x: " << x << " " << "y: " <<  y << "jobb padel y: " << j_p.y << std::endl;
         
-        if (x == screenWidth)
+        if (x > screenWidth && x < screenWidth + 60)
+        {
+            if (y >= j_p.y || y <= j_p.y + screenHeight / 4)
+            {
+                speedX *= -1;
+            }
+        }
+
+        else if (x > screenWidth + 70)
+        {
+            CloseWindow();
+        }
+
+        if (x < 0)
         {
             if (y >= b_p.y || y <= b_p.y + screenHeight / 4)
             {
@@ -92,7 +105,7 @@ public:
             }
         }
 
-        if (x > screenWidth + 70)
+        else if (x > screenWidth + 70)
         {
             CloseWindow();
         }
