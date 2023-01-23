@@ -1,6 +1,23 @@
 # cpp-raylib-pong
 
-## linux
+## install cmake
+
+### windows
+Tölsd le és telepísd
+https://cmake.org/download/
+
+### linux
+
+ubuntu/debian
+``` bash
+sudo at-get install cmake
+```
+arch
+``` bash
+sudo pacmen -S cmake
+```
+
+## linux/windows
 
 clone
 ``` bash

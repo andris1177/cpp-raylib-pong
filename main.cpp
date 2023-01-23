@@ -1,6 +1,24 @@
 #include <iostream>
 #include "raylib.h"
 
+class Menu
+{
+public:
+    int screenWidth;
+    int screenHeight;
+
+    Menu(int width, int height)
+    {
+        screenWidth = width;
+        screenHeight = height;
+    }
+
+    void Draw()
+    {
+        DrawText("PONG", screenWidth/2, screenHeight/2, 20, WHITE);
+    }
+};
+
 class Pedal
 {
 public:
@@ -64,6 +82,8 @@ public:
     int speedY = 4;
     int screenWidth;
     int screenHeight;
+    int j_score = 0;
+    int b_score = 0;
     Ball(int width, int height)
     {
         x = width / 2;
@@ -76,19 +96,21 @@ public:
     {
         float ballRadius = 25;
         DrawCircle(x, y, ballRadius, WHITE);
+        
     }
 
     void Move(Pedal& b_p, Pedal& j_p)
     {
         x += speedX;
         y += speedY;
-        std::cout << "x: " << x << " " << "y: " <<  y << "jobb padel y: " << j_p.y << std::endl;
+        std::cout << "x: " << x << " " << "y: " <<  y <<  " bal pedal y:" << b_p.y <<  " jobb padel y: " << j_p.y << " jobb score: " << j_score << " bal score: " << b_score <<  std::endl;
         
         if (x > screenWidth)
         {
             if (y >= j_p.y && y <= j_p.y + screenHeight / 4)
             {
                 speedX *= -1;
+                j_score++;
             }
 
             else if (x > screenWidth + 12)
@@ -102,6 +124,7 @@ public:
             if (y >= b_p.y && y <= b_p.y + screenHeight / 4)
             {
                 speedX *= -1;
+                b_score++;
             }
 
             else if (x < -12)
@@ -129,6 +152,7 @@ int main()
     InitWindow(screenWidth, screenHeight, "Pong");
     SetTargetFPS(60);
 
+    Menu m(screenWidth, screenHeight);
     Pedal b_p(1, screenHeight/2, 4, screenHeight/4, 0);
     Pedal j_p(screenWidth-4, screenHeight/2, 4, screenHeight/4, 1);
     Ball b(screenWidth, screenHeight);
@@ -136,7 +160,8 @@ int main()
     while (!WindowShouldClose())
     {
         BeginDrawing();
-        ClearBackground(BLACK);
+        ClearBackground(BLUE);
+        //m.Draw();
         b_p.Draw();
         b_p.Move();
         j_p.Draw();
