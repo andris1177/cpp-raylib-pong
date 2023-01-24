@@ -1,4 +1,6 @@
-#include <iostream>
+#include "src/single_player1v1.cpp"
+#include "src/single_playerbv1.cpp"
+#include "src/multiplayer.cpp"
 #include "raylib.h"
 
 class Menu
@@ -6,172 +8,103 @@ class Menu
 public:
     int screenWidth;
     int screenHeight;
-
+    int selectedOption;
+    const int numOptions = 4;
+    Rectangle singlePlayer1v1Button;
+    Rectangle singlePlayerButton;
+    Rectangle multiplayerButton;
+    Rectangle quitButton;
     Menu(int width, int height)
     {
         screenWidth = width;
         screenHeight = height;
+        selectedOption = 0;
+
+        singlePlayer1v1Button.x = screenWidth/2 - 120;
+        singlePlayer1v1Button.y = screenHeight/2 - 60;
+        singlePlayer1v1Button.width = 240;
+        singlePlayer1v1Button.height = 40;
+
+        singlePlayerButton.x = screenWidth/2 - 120;
+        singlePlayerButton.y = screenHeight/2 - 20;
+        singlePlayerButton.width = 240;
+        singlePlayerButton.height = 40;
+
+        multiplayerButton.x = screenWidth/2 - 120;
+        multiplayerButton.y = screenHeight/2 + 20;
+        multiplayerButton.width = 240;
+        multiplayerButton.height = 40;
+
+        quitButton.x = 20;
+        quitButton.y = screenHeight - 40;
+        quitButton.width = 80;
+        quitButton.height = 20;
     }
 
-    void Draw()
+    void HandleInput()
     {
-        DrawText("PONG", screenWidth/2, screenHeight/2, 20, WHITE);
-    }
-};
-
-class Pedal
-{
-public:
-    int y;
-    int x;
-    int width;
-    int height;
-    int speed = 3;
-    int oldal;
-    Pedal(int pedalX, int pedalY, int pWidth, int pHeight, int poldal)
-    {
-        y = pedalY;
-        x = pedalX;
-        width = pWidth;
-        height = pHeight;
-        oldal = poldal;
-
-    }
-
-    void Draw()
-    {
-        DrawRectangle(x, y, width, height, WHITE);
-    }
-
-    void Move()
-    {  
-        if (oldal == 0)
-        {      
-            if (IsKeyDown(KEY_W))
-            {
-                y -= speed;
-            }
-
-            if (IsKeyDown(KEY_S))
-            {
-                y += speed;
-            }
-        }
-
-        if (oldal == 1)
-        {      
-            if (IsKeyDown(KEY_UP))
-            {
-                y -= speed;
-            }
-
-            if (IsKeyDown(KEY_DOWN))
-            {
-                y += speed;
-            }
-        }
-    }
-};
-
-class Ball
-{
-public:
-    int x;
-    int y;
-    int speedX = 4;
-    int speedY = 4;
-    int screenWidth;
-    int screenHeight;
-    int j_score = 0;
-    int b_score = 0;
-    Ball(int width, int height)
-    {
-        x = width / 2;
-        y = height / 2;
-        screenWidth = width;
-        screenHeight = height;
-    }
-
-    void Draw()
-    {
-        float ballRadius = 25;
-        DrawCircle(x, y, ballRadius, WHITE);
-        
-    }
-
-    void Move(Pedal& b_p, Pedal& j_p)
-    {
-        x += speedX;
-        y += speedY;
-        std::cout << "x: " << x << " " << "y: " <<  y <<  " bal pedal y:" << b_p.y <<  " jobb padel y: " << j_p.y << " jobb score: " << j_score << " bal score: " << b_score <<  std::endl;
-        
-        if (x > screenWidth)
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         {
-            if (y >= j_p.y && y <= j_p.y + screenHeight / 4)
+            Vector2 mousePos = GetMousePosition();
+            if (CheckCollisionPointRec(mousePos, singlePlayer1v1Button))
             {
-                speedX *= -1;
-                j_score++;
+                selectedOption = 0;
+                SinglePlayer1v1::single_player_1v1(screenWidth, screenHeight);
+                CloseWindow();
             }
-
-            else if (x > screenWidth + 12)
+            else if (CheckCollisionPointRec(mousePos, singlePlayerButton))
             {
+                selectedOption = 1;
+                SinglePlayerbv1::single_player_bv1(screenWidth, screenHeight);
+                CloseWindow();
+            }
+            else if (CheckCollisionPointRec(mousePos, multiplayerButton))
+            {
+                selectedOption = 2;
+                std::cout << "Még nincs kész a multiplayer" << std::endl;
+            }
+            else if (CheckCollisionPointRec(mousePos, quitButton))
+            {
+                selectedOption = 3;
                 CloseWindow();
             }
         }
+    }
 
-        if (x < 0)
-        {
-            if (y >= b_p.y && y <= b_p.y + screenHeight / 4)
-            {
-                speedX *= -1;
-                b_score++;
-            }
+    void Draw()
+    {
+        DrawText("PONG", screenWidth/2 - MeasureText("PONG", 30)/2, screenHeight/4, 30, WHITE);
+        if (selectedOption == 0) DrawRectangleRec(singlePlayer1v1Button, RED);
+        else DrawRectangleRec(singlePlayer1v1Button, WHITE);
+        DrawText("Single Player 1v1", singlePlayer1v1Button.x + singlePlayer1v1Button.width/2 - MeasureText("Single Player 1v1", 20)/2, singlePlayer1v1Button.y + singlePlayer1v1Button.height/2 - 10, 20, BLACK);
 
-            else if (x < -12)
-            {
-                CloseWindow();
-            }
-        }
+        if (selectedOption == 1) DrawRectangleRec(singlePlayerButton, RED);
+        else DrawRectangleRec(singlePlayerButton, WHITE);
+        DrawText("Single Player", singlePlayerButton.x + singlePlayerButton.width/2 - MeasureText("Single Player", 20)/2, singlePlayerButton.y + singlePlayerButton.height/2 - 10, 20, BLACK);
 
-        if (y > screenHeight)
-        {
-            speedY *= -1;
-        }
+        if (selectedOption == 2) DrawRectangleRec(multiplayerButton, RED);
+        else DrawRectangleRec(multiplayerButton, WHITE);
+        DrawText("Multiplayer", multiplayerButton.x + multiplayerButton.width/2 - MeasureText("Multiplayer", 20)/2, multiplayerButton.y + multiplayerButton.height/2 - 10, 20, BLACK);
 
-        if (y < 1)
-        {
-            speedY *= -1;
-        }
+        if (selectedOption == 3) DrawRectangleRec(quitButton, RED);
+        else DrawRectangleRec(quitButton, WHITE);
+        DrawText("Quit", quitButton.x + quitButton.width/2 - MeasureText("Quit", 20)/2, quitButton.y + quitButton.height/2 - 10, 20, BLACK);
     }
 };
 
 int main()
 {
-    const int screenWidth = 1280;
-    const int screenHeight = 720;
-    InitWindow(screenWidth, screenHeight, "Pong");
-    SetTargetFPS(60);
-
+    int screenWidth = 1280;
+    int screenHeight = 720;
     Menu m(screenWidth, screenHeight);
-    Pedal b_p(1, screenHeight/2, 4, screenHeight/4, 0);
-    Pedal j_p(screenWidth-4, screenHeight/2, 4, screenHeight/4, 1);
-    Ball b(screenWidth, screenHeight);
+    InitWindow(screenWidth, screenHeight, "Pong ");
+    SetTargetFPS(60);
 
     while (!WindowShouldClose())
     {
         BeginDrawing();
-        ClearBackground(BLUE);
-        //m.Draw();
-        b_p.Draw();
-        b_p.Move();
-        j_p.Draw();
-        j_p.Move();
-        b.Draw();
-        b.Move(b_p, j_p);
-        DrawLine(screenWidth/2, 0, screenWidth/2, screenHeight, WHITE);
+        m.HandleInput();
+        m.Draw();
         EndDrawing();
     }
-
-    CloseWindow();
-    return 0;
 }

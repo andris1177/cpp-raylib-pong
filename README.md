@@ -11,10 +11,12 @@ https://cmake.org/download/
 ubuntu/debian
 ``` bash
 sudo at-get install cmake
+sudo apt-get install libboost-all-dev
 ```
 arch
 ``` bash
 sudo pacmen -S cmake
+sudo pacman -S libboost-all-dev
 ```
 
 ## linux/windows
