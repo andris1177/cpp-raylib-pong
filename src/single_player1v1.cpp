@@ -79,14 +79,14 @@ namespace SinglePlayer1v1
         {
             float ballRadius = 25;
             DrawCircle(x, y, ballRadius, WHITE);
-            
+            DrawText(std::to_string(b_score).c_str(), screenWidth/2-80, 40, 80, WHITE);
+            DrawText(std::to_string(j_score).c_str(), screenWidth/2+40, 40, 80, WHITE);
         }
 
         void Move(Pedal& b_p, Pedal& j_p)
         {
             x += speedX;
             y += speedY;
-            std::cout << "x: " << x << " " << "y: " <<  y <<  " bal pedal y:" << b_p.y <<  " jobb padel y: " << j_p.y << " jobb score: " << j_score << " bal score: " << b_score <<  std::endl;
             
             if (x > screenWidth)
             {

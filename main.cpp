@@ -50,7 +50,7 @@ public:
             {
                 selectedOption = 0;
                 SinglePlayer1v1::single_player_1v1(screenWidth, screenHeight);
-                CloseWindow();
+                //CloseWindow();
             }
             else if (CheckCollisionPointRec(mousePos, singlePlayerButton))
             {
