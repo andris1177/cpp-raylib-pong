@@ -123,7 +123,7 @@ void Pong::run()
     this->pedals[1] = new Pedal(screenWidth, screenHeight, 1);
 
     InitWindow(screenWidth, screenHeight, "Pong");
-    SetTargetFPS(90);
+    SetTargetFPS(60);
 
     while (!WindowShouldClose())
     {
