@@ -24,7 +24,6 @@ void Pong::draw()
 
 void Pong::handle_input()
 {
-    //pedál irányítás
     if (IsKeyDown(KEY_UP))
     {
         this->pedals[1]->move(true);
@@ -45,10 +44,8 @@ void Pong::handle_input()
         this->pedals[0]->move(false);
     }
 
-    //labda mozgatása
     this->ball->move();
 
-    //collide
     if (this->collided(this->ball, this->pedals[0]))
     {
         this->ball->collide(true);
