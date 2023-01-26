@@ -16,5 +16,5 @@ public:
     void run();
     bool collided(Ball* b, Pedal* p);
     bool collidedge(Ball* b, char side);
-    Pong(int screenWidth, int screenHeight);
+    Pong(int screenWidth, int screenHeight, int fps);
 };

@@ -2,10 +2,11 @@
 #include "raylib.h"
 #include <iostream>
 
-Pong::Pong(int screenWidth, int screenHeight)
+Pong::Pong(int screenWidth, int screenHeight, int fps)
 {
     this->screenWidth = screenWidth;
     this->screenHeight = screenHeight;
+    this->maxFps = fps;
 }
 
 void Pong::draw()
@@ -17,7 +18,7 @@ void Pong::draw()
     this->pedals[1]->draw();
     DrawLine(screenWidth/2, 0, screenWidth/2, screenHeight, WHITE);
     DrawText(std::to_string(this->pedals[1]->getScore()).c_str(), screenWidth/2-80, 40, 80, WHITE);
-        DrawText(std::to_string(this->pedals[0]->getScore()).c_str(), screenWidth/2+40, 40, 80, WHITE);
+    DrawText(std::to_string(this->pedals[0]->getScore()).c_str(), screenWidth/2+40, 40, 80, WHITE);
     EndDrawing();
 }
 
@@ -123,7 +124,7 @@ void Pong::run()
     this->pedals[1] = new Pedal(screenWidth, screenHeight, 1);
 
     InitWindow(screenWidth, screenHeight, "Pong");
-    SetTargetFPS(60);
+    SetTargetFPS(maxFps);
 
     while (!WindowShouldClose())
     {

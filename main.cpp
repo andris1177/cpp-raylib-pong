@@ -7,6 +7,7 @@ int main()
 {
     int screenWidth = 1280;
     int screeHeight = 720;
-    Pong game(screenWidth, screeHeight);
+    int fps = 60;
+    Pong game(screenWidth, screeHeight, fps);
     game.run();
 }
