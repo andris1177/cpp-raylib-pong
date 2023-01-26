@@ -2,6 +2,8 @@
 
 ## Linux
 
+raylib telepítése : https://github.com/raysan5/raylib
+
 cmake telepítése
 ```bash
 sudo apt-get install cmake
