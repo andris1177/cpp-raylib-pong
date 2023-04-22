@@ -68,11 +68,13 @@ int Menu::run()
         this->draw();
         if (singlePlayer)
         {
+            CloseWindow();
             return 1;
         }
 
         else if(multiPlayer)
         {
+            CloseWindow();
             return 2;
         }
     }
