@@ -2,11 +2,12 @@
 #include "raylib.h"
 #include <iostream>
 
-Pong::Pong(int screenWidth, int screenHeight, int fps)
+Pong::Pong(int screenWidth, int screenHeight, int fps, int mode)
 {
     this->screenWidth = screenWidth;
     this->screenHeight = screenHeight;
     this->maxFps = fps;
+    this->gameMode = mode;
 }
 
 void Pong::draw()
@@ -24,24 +25,53 @@ void Pong::draw()
 
 void Pong::handle_input()
 {
-    if (IsKeyDown(KEY_UP))
+    //multi player 1v1
+    if (gameMode == 2)
     {
-        this->pedals[1]->move(true);
+        if (IsKeyDown(KEY_UP))
+        {
+            this->pedals[1]->move(true);
+        }
+
+        if (IsKeyDown(KEY_DOWN))
+        {
+            this->pedals[1]->move(false);
+        }
+
+        if (IsKeyDown(KEY_W))
+        {
+            this->pedals[0]->move(true);
+        }
+
+        if (IsKeyDown(KEY_S))
+        {
+            this->pedals[0]->move(false);
+        }
     }
 
-    if (IsKeyDown(KEY_DOWN))
+    //single player
+    if (gameMode == 1)
     {
-        this->pedals[1]->move(false);
-    }
+        //player controlled pedal
+        if (IsKeyDown(KEY_UP))
+        {
+            this->pedals[0]->move(true);
+        }
 
-    if (IsKeyDown(KEY_W))
-    {
-        this->pedals[0]->move(true);
-    }
+        if (IsKeyDown(KEY_DOWN))
+        {
+            this->pedals[0]->move(false);
+        }
 
-    if (IsKeyDown(KEY_S))
-    {
-        this->pedals[0]->move(false);
+        // "ai" controlled pedal
+        if (this->ball->getPos().y > this->pedals[1]->getPos().y)
+        {
+            this->pedals[1]->move(false);
+        }
+        else if (this->ball->getPos().y < this->pedals[1]->getPos().y)
+        {
+            this->pedals[1]->move(true);
+        }
     }
 
     this->ball->move();
@@ -77,6 +107,7 @@ void Pong::handle_input()
     {
         this->ball->collide(false);
     }
+    
 }
 
 bool Pong::collided(Ball* b, Pedal* p)
@@ -116,6 +147,10 @@ bool Pong::collidedge(Ball* b, char side)
 
 void Pong::run()
 {
+    if (gameMode == 0)
+    {
+        return;
+    }
     this->ball = new Ball(screenWidth, screenHeight);
     this->pedals[0] = new Pedal(screenWidth, screenHeight, 0);
     this->pedals[1] = new Pedal(screenWidth, screenHeight, 1);
