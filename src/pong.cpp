@@ -79,33 +79,39 @@ void Pong::handle_input()
     if (this->collided(this->ball, this->pedals[0]))
     {
         this->ball->collide(true);
+        PlaySound(this->paddel);
     }
 
     if (this->collided(this->ball, this->pedals[1]))
     {
         this->ball->collide(true);
+        PlaySound(this->paddel);
     }
 
     if (this->collidedge(this->ball, 'l'))
     {
         this->pedals[0]->addScore();
+        PlaySound(score);
         this->ball->reset(screenWidth/2, screenHeight/2);
     }
 
     if (this->collidedge(this->ball, 'r'))
     {
         this->pedals[1]->addScore();
+        PlaySound(score);
         this->ball->reset(screenWidth/2, screenHeight/2);
     }
 
     if (this->collidedge(this->ball, 'u'))
     {
         this->ball->collide(false);
+        PlaySound(this->wall);
     }
 
     if (this->collidedge(this->ball, 'd'))
     {
         this->ball->collide(false);
+        PlaySound(this->wall);
     }
     
 }
@@ -156,7 +162,12 @@ void Pong::run()
     this->pedals[1] = new Pedal(screenWidth, screenHeight, 1);
 
     InitWindow(screenWidth, screenHeight, "Pong");
+    InitAudioDevice(); 
     SetTargetFPS(maxFps);
+
+    this->paddel = LoadSound("../sounds/paddel.wav");
+    this->wall = LoadSound("../sounds/wall.wav");
+    this->score = LoadSound("../sounds/score.wav");
 
     while (!WindowShouldClose())
     {
@@ -166,5 +177,9 @@ void Pong::run()
     delete this->ball;
     delete this->pedals[0];
     delete this->pedals[1];
+    UnloadSound(this->paddel);
+    UnloadSound(this->wall);
+    UnloadSound(this->score);
+    CloseAudioDevice(); 
     CloseWindow();
 }

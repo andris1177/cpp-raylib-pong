@@ -1,6 +1,7 @@
 #pragma once
 #include "ball.h"
 #include "pedal.h"
+#include "raylib.h"
 class Pong
 {
 private:
@@ -10,6 +11,9 @@ private:
     int gameMode;
     Pedal* pedals[2];
     Ball* ball;
+    Sound paddel;
+    Sound wall;
+    Sound score;
 
 public:
     Pong(int screenWidth, int screenHeight, int fps, int mode);
