@@ -12,9 +12,9 @@ Menu::Menu(int screenWidth, int screenHeight, int fps)
     this->buttonWidth = 200;
     this->buttonHeight = 50;
     this->s_buttonX = screenWidth / 2 - buttonWidth / 2;
-    this->s_buttonY = screenHeight /2;
+    this->s_buttonY = screenHeight / 2;
     this->m_buttonX = screenWidth / 2 - buttonWidth / 2;
-    this-> m_buttonY = screenHeight /2 + 100;
+    this-> m_buttonY = screenHeight / 2 + 100;
 }
 
 void Menu::draw()
