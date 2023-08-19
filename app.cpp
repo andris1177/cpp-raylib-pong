@@ -11,10 +11,10 @@ int main()
     int fps = 60;
     int gameMode = 0;
 
-    Menu menu(screenWidth, screeHeight, fps);
-    gameMode = menu.run();
+    Menu *menu = new Menu(screenWidth, screeHeight, fps);
+    gameMode = menu->run();
+    delete menu;
     
-    Pong game(screenWidth, screeHeight, fps, gameMode);
-    game.run();
-    
+    Pong *pong = new Pong(screenWidth, screeHeight, fps, gameMode);
+    delete pong;
 }

@@ -8,6 +8,7 @@ Pong::Pong(int screenWidth, int screenHeight, int fps, int mode)
     this->screenHeight = screenHeight;
     this->maxFps = fps;
     this->gameMode = mode;
+    run();
 }
 
 void Pong::draw()
