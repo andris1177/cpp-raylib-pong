@@ -2,29 +2,14 @@
 
 ## Linux
 
-raylib telepítése : https://github.com/raysan5/raylib
-
-cmake telepítése
-```bash
-sudo apt-get install cmake
-```
-
-vagy 
-``` bash
-sudo pacman -S cmake
-```
-
-git clone 
+### download
 ``` bash
 git clone https://github.com/andris1177/cpp-raylib-pong.git
+cd cpp-raylib-pong
 ```
 
-futtatás
+### run
 ``` bash
-cd cpp-raylib-pong
-mkdri build
-cd build
-cmake ../
-make
-./main
+chmod +x run.sh
+./run.sh
 ```
