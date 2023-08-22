@@ -74,16 +74,7 @@ arch()
     done
 }
 
-windows()
-{
-    # Install vcpkg, which is an open-source package manager for Windows.
-    git clone https://github.com/microsoft/vcpkg
-    ./vcpkg\bootstrap-vcpkg.bat
-    ./vcpkg/vcpkg.exe install raylib:x64-windows
-}
-
 macos()
-
 {
     # Install Homebrew, which is an open source package manager for macOS.
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -122,39 +113,6 @@ build()
             ./app
         fi
     fi        
-}
-
-windowsBuild()
-{
-    folder_name="build"
-
-    if [ -d "$folder_name" ]; then
-        echo "Folder $folder_name already exists."
-        build2
-    else
-        echo "Folder $folder_name does not exist. Creating..."
-        mkdir "$folder_name"
-        echo "Folder $folder_name created."
-        build2
-    fi
-}
-
-build2()
-{
-    cmake ..
-    if [ $? -ne 0 ]; then
-        echo "cmake .. failed."
-        exit $?
-    fi
-
-    cmake --build . --config Release
-    if [ $? -ne 0 ]; then
-        echo "cmake --build . --config Release failed."
-        exit $?
-    fi
-
-    cd Release
-    ./app.exe
 }
 
 case "$OSTYPE" in
