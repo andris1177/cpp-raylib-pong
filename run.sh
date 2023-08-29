@@ -1,5 +1,5 @@
 #!/bin/sh
-package_names=("cmake" "raylib")
+package_names = "cmake" "raylib"
 
 linux()
 {
