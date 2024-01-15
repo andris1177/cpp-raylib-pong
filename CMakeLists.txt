@@ -16,17 +16,17 @@ file(GLOB_RECURSE source CONFIGURE_DEPENDS "src/*.cpp")
 # include raylib
 add_subdirectory(external/raylib)
 
-# add the app.cpp
+# add the pong.cpp
 set(SOURCES app.cpp ${source})
 
 # create the excutable
-add_executable(app ${SOURCES})
+add_executable(pong ${SOURCES})
 
 # include the headers 
-target_include_directories(app PRIVATE header)
+target_include_directories(pong PRIVATE header)
 
 # link raylib
-target_link_libraries(app PRIVATE raylib)
+target_link_libraries(pong PRIVATE raylib)
 
 # static raylib link
-# target_link_libraries(app PRIVATE raylib_static)
+# target_link_libraries(pong PRIVATE raylib_static)

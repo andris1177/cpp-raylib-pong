@@ -16,7 +16,7 @@ mkdir build
 cd build
 cmake ../
 make
-./app
+./pong
 ```
 
 ## Windows
@@ -29,5 +29,5 @@ cd build
 cmake ../
 msbuild pong.sln /p:Configuration=Release
 cd Relase
-app.exe
+pong.exe
 ```
