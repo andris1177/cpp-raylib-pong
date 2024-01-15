@@ -1,15 +1,35 @@
 # Használata
 
-## Linux
 
-### download
+
+## download
+
 ``` bash
 git clone https://github.com/andris1177/cpp-raylib-pong.git
 cd cpp-raylib-pong
 ```
 
-### run
+## Linux
+
+### Run
+
 ``` bash
-chmod +x run.sh
-./run.sh
+mkdir build
+cd build
+cmake ../
+make
+./app
+```
+
+## Windows
+
+### Run
+
+``` bash
+mkdir build
+cd build
+cmake ../
+msbuild pong.sln /p:Configuration=Release
+cd Relase
+app.exe
 ```

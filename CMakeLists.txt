@@ -6,15 +6,27 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-#set(CMAKE_BUILD_TYPE Debug)
-set(CMAKE_BUILD_TYPE Relase)
+# set build type
+# set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Release)
 
+# add cpp files
 file(GLOB_RECURSE source CONFIGURE_DEPENDS "src/*.cpp")
 
-# Specify the source files for the project
-set(SOURCES app.cpp)
+# include raylib
+add_subdirectory(external/raylib)
 
-# Create the executable
-add_executable(app ${SOURCES} ${source})
+# add the app.cpp
+set(SOURCES app.cpp ${source})
 
-target_link_libraries(app PRIVATE /usr/local/lib/libraylib.a)
+# create the excutable
+add_executable(app ${SOURCES})
+
+# include the headers 
+target_include_directories(app PRIVATE header)
+
+# link raylib
+target_link_libraries(app PRIVATE raylib)
+
+# static raylib link
+# target_link_libraries(app PRIVATE raylib_static)

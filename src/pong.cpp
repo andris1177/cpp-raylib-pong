@@ -19,8 +19,8 @@ void Pong::draw()
     this->pedals[0]->draw();
     this->pedals[1]->draw();
     DrawLine(screenWidth/2, 0, screenWidth/2, screenHeight, WHITE);
-    DrawText(std::to_string(this->pedals[1]->getScore()).c_str(), screenWidth/2-80, 40, 80, WHITE);
-    DrawText(std::to_string(this->pedals[0]->getScore()).c_str(), screenWidth/2+40, 40, 80, WHITE);
+    DrawText(TextFormat("%d", this->pedals[1]->getScore()), screenWidth/2-80, 40, 80, WHITE);
+    DrawText(TextFormat("%d", this->pedals[0]->getScore()), screenWidth/2+40, 40, 80, WHITE);
     EndDrawing();
 }
 
