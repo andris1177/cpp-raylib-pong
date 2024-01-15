@@ -5,7 +5,7 @@
 ## download
 
 ``` bash
-git clone https://github.com/andris1177/cpp-raylib-pong.git
+git clone --recursive https://github.com/andris1177/cpp-raylib-pong.git
 cd cpp-raylib-pong
 ```
 
