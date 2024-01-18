@@ -2,6 +2,8 @@
 #include <fstream>
 #include "definition.h"
 #include <unordered_map>
+#include <string>
+
 namespace Game
 {
     class ReadConf
