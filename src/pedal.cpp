@@ -1,8 +1,6 @@
-#include "../header/definition.h"
 #include "../header/pedal.h"
-#include "raylib.h"
 
-Pedal::Pedal(int screenwidth, int screenHeight, int oldal) 
+Game::Pedal::Pedal(int screenwidth, int screenHeight, int oldal) 
 {
     width = 8;
     height = screenHeight/4;
@@ -12,12 +10,12 @@ Pedal::Pedal(int screenwidth, int screenHeight, int oldal)
     speed = 4;
 };
 
-position Pedal::getPos()
+position Game::Pedal::getPos()
 {
     return {this->x, this->y};
 }
 
-void Pedal::move(bool direction)
+void Game::Pedal::move(bool direction)
 {
     if (direction == false)
     {
@@ -39,17 +37,17 @@ void Pedal::move(bool direction)
     }
 }
 
-void Pedal::draw()
+void Game::Pedal::draw()
 {
     DrawRectangle(x, y, width, height, WHITE);
 }
 
-int Pedal::getScore()
+int Game::Pedal::getScore()
 {
     return score;
 }
 
-void Pedal::addScore()
+void Game::Pedal::addScore()
 {
     score++;
 }

@@ -1,10 +1,6 @@
-#include "../header/definition.h"
 #include "../header/ball.h"
-#include "raylib.h"
-#include <stdlib.h>
-#include <cmath>
 
-Ball::Ball(int screeWidth, int screenHeight)
+Game::Ball::Ball(int screeWidth, int screenHeight)
 {
     x = screeWidth/2;
     y = screenHeight/2;
@@ -13,28 +9,28 @@ Ball::Ball(int screeWidth, int screenHeight)
     angle = rand()/1000000 % 7;
 }
 
-position Ball::getPos()
+position Game::Ball::getPos()
 {
     return {x, y};
 }
 
-int Ball::getRadius()
+int Game::Ball::getRadius()
 {
     return radius;
 }
 
-void Ball::move()
+void Game::Ball::move()
 {
     x += speed * cos(angle);
     y += speed * sin(angle);
 }
 
-void Ball::draw()
+void Game::Ball::draw()
 {
     DrawCircle(x, y, radius, WHITE);
 }
 
-void Ball::collide(bool direction)
+void Game::Ball::collide(bool direction)
 {
     if (!direction)
     {
@@ -67,7 +63,7 @@ void Ball::collide(bool direction)
     }
 }
 
-void Ball::reset(int x, int y)
+void Game::Ball::reset(int x, int y)
 {
     this->x = x;
     this->y = y;

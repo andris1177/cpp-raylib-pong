@@ -1,17 +1,19 @@
 #include "../header/pong.h"
-#include "raylib.h"
-#include <iostream>
 
-Pong::Pong(int screenWidth, int screenHeight, int fps, int mode)
+Game::Pong::Pong(settings setting, int mode)
 {
-    this->screenWidth = screenWidth;
-    this->screenHeight = screenHeight;
-    this->maxFps = fps;
+    this->screenWidth = setting.screenWidth;
+    this->screenHeight = setting.screenHeight;
+    this->maxFps = setting.fps;
     this->gameMode = mode;
+    this->player1_up = setting.player1_up;
+    this->player1_down = setting.player1_down;
+    this->player2_up = setting.player2_up;
+    this->player2_down = setting.player2_down;
     run();
 }
 
-void Pong::draw()
+void Game::Pong::draw()
 {
     BeginDrawing();
     ClearBackground(BLACK);
@@ -24,27 +26,27 @@ void Pong::draw()
     EndDrawing();
 }
 
-void Pong::handle_input()
+void Game::Pong::handle_input()
 {
     //multi player 1v1
     if (gameMode == 2)
     {
-        if (IsKeyDown(KEY_UP))
+        if (IsKeyDown(player2_up))
         {
             this->pedals[1]->move(true);
         }
 
-        if (IsKeyDown(KEY_DOWN))
+        if (IsKeyDown(player2_down))
         {
             this->pedals[1]->move(false);
         }
 
-        if (IsKeyDown(KEY_W))
+        if (IsKeyDown(player1_up))
         {
             this->pedals[0]->move(true);
         }
 
-        if (IsKeyDown(KEY_S))
+        if (IsKeyDown(player1_down))
         {
             this->pedals[0]->move(false);
         }
@@ -54,12 +56,12 @@ void Pong::handle_input()
     if (gameMode == 1)
     {
         //player controlled pedal
-        if (IsKeyDown(KEY_UP))
+        if (IsKeyDown(player1_up))
         {
             this->pedals[0]->move(true);
         }
 
-        if (IsKeyDown(KEY_DOWN))
+        if (IsKeyDown(player1_down))
         {
             this->pedals[0]->move(false);
         }
@@ -117,13 +119,13 @@ void Pong::handle_input()
     
 }
 
-bool Pong::collided(Ball* b, Pedal* p)
+bool Game::Pong::collided(Ball* b, Pedal* p)
 {
     position pedal = p->getPos();
     position ball = b->getPos();
     return (pedal.x - ball.x) * (pedal.x - ball.x) <= this->ball->getRadius() * this->ball->getRadius() && ball.y >= pedal.y && ball.y <= pedal.y + screenHeight / 4;
 }
-bool Pong::collidedge(Ball* b, char side)
+bool Game::Pong::collidedge(Ball* b, char side)
 {
     position ball = b->getPos();
     bool result;
@@ -152,7 +154,7 @@ bool Pong::collidedge(Ball* b, char side)
     return result;   
 }
 
-void Pong::run()
+void Game::Pong::run()
 {
     if (gameMode == 0)
     {

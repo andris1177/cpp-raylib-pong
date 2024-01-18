@@ -1,12 +1,10 @@
 #include "../header/menu.h"
-#include "raylib.h"
-#include <iostream>
 
-Menu::Menu(int screenWidth, int screenHeight, int fps)
+Game::Menu::Menu(settings setting)
 {
-    this->screenWidth = screenWidth;
-    this->screenHeight = screenHeight;
-    this->maxFps = fps;
+    this->screenWidth = setting.screenWidth;
+    this->screenHeight = setting.screenHeight;
+    this->maxFps = setting.fps;
     this->singlePlayer = false;
     this->multiPlayer = false;
     this->buttonWidth = 200;
@@ -17,7 +15,7 @@ Menu::Menu(int screenWidth, int screenHeight, int fps)
     this-> m_buttonY = screenHeight / 2 + 100;
 }
 
-void Menu::draw()
+void Game::Menu::draw()
 {
     BeginDrawing();
     ClearBackground(BLACK);
@@ -29,7 +27,7 @@ void Menu::draw()
     EndDrawing();
 }
 
-void Menu::check_coilison()
+void Game::Menu::check_coilison()
 {
     if (CheckCollisionPointRec(GetMousePosition(), { s_buttonX, s_buttonY, buttonWidth, buttonHeight }))
         {
@@ -57,7 +55,7 @@ void Menu::check_coilison()
         }
 }
 
-int Menu::run()
+int Game::Menu::run()
 {
     InitWindow(screenWidth, screenHeight, "Pong");
     SetTargetFPS(maxFps);
