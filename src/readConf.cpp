@@ -2,7 +2,7 @@
 
 Game::ReadConf::ReadConf()
 {
-    this->file_path = "../config/game.config";
+    this->file_path = "config/game.config";
     ReadFile();
 }
 

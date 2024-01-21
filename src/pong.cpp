@@ -168,9 +168,9 @@ void Game::Pong::run()
     InitAudioDevice(); 
     SetTargetFPS(maxFps);
 
-    this->paddel = LoadSound("../sounds/paddel.wav");
-    this->wall = LoadSound("../sounds/wall.wav");
-    this->score = LoadSound("../sounds/score.wav");
+    this->paddel = LoadSound("sounds/paddel.wav");
+    this->wall = LoadSound("sounds/wall.wav");
+    this->score = LoadSound("sounds/score.wav");
 
     while (!WindowShouldClose())
     {
