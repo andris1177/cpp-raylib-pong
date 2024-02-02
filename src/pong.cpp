@@ -2,14 +2,16 @@
 
 Game::Pong::Pong(settings setting, int mode)
 {
-    this->screenWidth = setting.screenWidth;
-    this->screenHeight = setting.screenHeight;
-    this->maxFps = setting.fps;
     this->gameMode = mode;
-    this->player1_up = setting.player1_up;
-    this->player1_down = setting.player1_down;
-    this->player2_up = setting.player2_up;
-    this->player2_down = setting.player2_down;
+    this->setting = setting;
+    this->ball = new Ball(setting.screenWidth, setting.screenHeight);
+    this->pedals[0] = new Pedal(setting.screenWidth, setting.screenHeight, 0);
+    this->pedals[1] = new Pedal(setting.screenWidth, setting.screenHeight, 1);
+
+    InitWindow(setting.screenWidth, setting.screenHeight, "Pong");
+    InitAudioDevice(); 
+    SetTargetFPS(setting.fps);
+    
     run();
 }
 
@@ -20,9 +22,9 @@ void Game::Pong::draw()
     this->ball->draw();
     this->pedals[0]->draw();
     this->pedals[1]->draw();
-    DrawLine(screenWidth/2, 0, screenWidth/2, screenHeight, WHITE);
-    DrawText(TextFormat("%d", this->pedals[1]->getScore()), screenWidth/2-80, 40, 80, WHITE);
-    DrawText(TextFormat("%d", this->pedals[0]->getScore()), screenWidth/2+40, 40, 80, WHITE);
+    DrawLine(setting.screenWidth/2, 0, setting.screenWidth/2, setting.screenHeight, WHITE);
+    DrawText(TextFormat("%d", this->pedals[1]->getScore()), setting.screenWidth/2-80, 40, 80, WHITE);
+    DrawText(TextFormat("%d", this->pedals[0]->getScore()), setting.screenWidth/2+40, 40, 80, WHITE);
     EndDrawing();
 }
 
@@ -31,22 +33,22 @@ void Game::Pong::handle_input()
     //multi player 1v1
     if (gameMode == 2)
     {
-        if (IsKeyDown(player2_up))
+        if (IsKeyDown(setting.player2_up))
         {
             this->pedals[1]->move(true);
         }
 
-        if (IsKeyDown(player2_down))
+        if (IsKeyDown(setting.player2_down))
         {
             this->pedals[1]->move(false);
         }
 
-        if (IsKeyDown(player1_up))
+        if (IsKeyDown(setting.player1_up))
         {
             this->pedals[0]->move(true);
         }
 
-        if (IsKeyDown(player1_down))
+        if (IsKeyDown(setting.player1_down))
         {
             this->pedals[0]->move(false);
         }
@@ -56,12 +58,12 @@ void Game::Pong::handle_input()
     if (gameMode == 1)
     {
         //player controlled pedal
-        if (IsKeyDown(player1_up))
+        if (IsKeyDown(setting.player1_up))
         {
             this->pedals[0]->move(true);
         }
 
-        if (IsKeyDown(player1_down))
+        if (IsKeyDown(setting.player1_down))
         {
             this->pedals[0]->move(false);
         }
@@ -95,14 +97,14 @@ void Game::Pong::handle_input()
     {
         this->pedals[0]->addScore();
         PlaySound(score);
-        this->ball->reset(screenWidth/2, screenHeight/2);
+        this->ball->reset(setting.screenWidth/2, setting.screenHeight/2);
     }
 
     if (this->collidedge(this->ball, 'r'))
     {
         this->pedals[1]->addScore();
         PlaySound(score);
-        this->ball->reset(screenWidth/2, screenHeight/2);
+        this->ball->reset(setting.screenWidth/2, setting.screenHeight/2);
     }
 
     if (this->collidedge(this->ball, 'u'))
@@ -123,7 +125,7 @@ bool Game::Pong::collided(Ball* b, Pedal* p)
 {
     position pedal = p->getPos();
     position ball = b->getPos();
-    return (pedal.x - ball.x) * (pedal.x - ball.x) <= this->ball->getRadius() * this->ball->getRadius() && ball.y >= pedal.y && ball.y <= pedal.y + screenHeight / 4;
+    return (pedal.x - ball.x) * (pedal.x - ball.x) <= this->ball->getRadius() * this->ball->getRadius() && ball.y >= pedal.y && ball.y <= pedal.y + setting.screenHeight / 4;
 }
 bool Game::Pong::collidedge(Ball* b, char side)
 {
@@ -136,7 +138,7 @@ bool Game::Pong::collidedge(Ball* b, char side)
         break;
 
     case 'd':
-        result = screenHeight - ball.y <= b->getRadius();
+        result = setting.screenHeight - ball.y <= b->getRadius();
         break;
 
     case 'l':
@@ -144,7 +146,7 @@ bool Game::Pong::collidedge(Ball* b, char side)
         break;
 
     case 'r':
-        result =  screenWidth - ball.x <= b->getRadius();
+        result =  setting.screenWidth - ball.x <= b->getRadius();
         break;
     
     default:
@@ -160,13 +162,11 @@ void Game::Pong::run()
     {
         return;
     }
-    this->ball = new Ball(screenWidth, screenHeight);
-    this->pedals[0] = new Pedal(screenWidth, screenHeight, 0);
-    this->pedals[1] = new Pedal(screenWidth, screenHeight, 1);
 
-    InitWindow(screenWidth, screenHeight, "Pong");
-    InitAudioDevice(); 
-    SetTargetFPS(maxFps);
+    if (setting.fullScreen)
+    {
+        ToggleFullscreen();    
+    }
 
     this->paddel = LoadSound("sounds/paddel.wav");
     this->wall = LoadSound("sounds/wall.wav");
@@ -177,6 +177,11 @@ void Game::Pong::run()
         this->draw();
         this->handle_input();
     }
+    
+}
+
+Game::Pong::~Pong()
+{
     delete this->ball;
     delete this->pedals[0];
     delete this->pedals[1];

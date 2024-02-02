@@ -8,14 +8,8 @@ namespace Game
     class Pong
     {
     private:
-        int screenWidth;
-        int screenHeight;
-        int maxFps;
+        settings setting;
         int gameMode;
-        int player1_up;
-        int player1_down;
-        int player2_up;
-        int player2_down;
         Pedal* pedals[2];
         Ball* ball;
         Sound paddel;
@@ -24,6 +18,7 @@ namespace Game
 
     public:
         Pong(settings setting, int mode);
+        ~Pong();
         void handle_input();
         void draw();
         void run();

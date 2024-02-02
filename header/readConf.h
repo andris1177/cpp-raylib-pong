@@ -10,6 +10,10 @@ namespace Game
     {
     private:
         std::string file_path;
+        int fullScreenWidth;
+        int fullScreenHeight;
+        int windowScreenWidth;
+        int windowScreenHeight;
         int screenWidth;
         int screenHeight;
         int fps;
@@ -19,11 +23,14 @@ namespace Game
         int player2_down;
         std::string line;
         std::string value;
+        std::string equal;
+        bool fullScreen;
         static const std::unordered_map<std::string, int> keyMap;
 
     private:
         void ReadFile();
         int ConvertKeyControll(const std::string& key);
+        void checkScreen();
 
     public:
         ReadConf();

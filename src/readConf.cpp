@@ -1,9 +1,11 @@
 #include "../header/readConf.h"
+#include <iostream>
 
 Game::ReadConf::ReadConf()
 {
-    this->file_path = "config/game.config";
+    this->file_path = "game.cfg";
     ReadFile();
+    checkScreen();
 }
 
 void Game::ReadConf::ReadFile()
@@ -17,17 +19,29 @@ void Game::ReadConf::ReadFile()
     while (!in.eof())
     {
         in >> line;
+        in >> equal;
         in >> value;
 
-        if (line == "SCREEN_WIDTH")
+        if (line == "FULL_SCREEN_WIDTH")
         {
-            screenWidth = std::stoi(value);
+            fullScreenWidth = std::stoi(value);
         }
 
-        else if(line == "SCREEN_HEIGHT")
+        else if(line == "FULL_SCREEN_HEIGHT")
         {
-            screenHeight = std::stoi(value);
+            fullScreenHeight = std::stoi(value);
         }
+
+        else if (line == "WINDOW_SCREEN_WIDTH")
+        {
+            windowScreenWidth = std::stoi(value);
+        }
+
+        else if(line == "WINDOW_SCREEN_HEIGHT")
+        {
+            windowScreenHeight = std::stoi(value);
+        }
+
         else if (line == "FPS")
         {
             fps = std::stoi(value);
@@ -51,6 +65,19 @@ void Game::ReadConf::ReadFile()
         else if (line == "PLAYER2_DOWN")
         {
            player2_down = ConvertKeyControll(value); 
+        }
+
+        else if (line == "FULL_SREEN")
+        {
+            if (value == "true")
+            {
+                fullScreen = true;
+            }
+
+            else if (value == "false")
+            {
+                fullScreen = false;
+            }
         }
 
         else if (line == "#")
@@ -177,8 +204,22 @@ int Game::ReadConf::ConvertKeyControll(const std::string& key)
     return -1;
 }
 
+void Game::ReadConf::checkScreen()
+{
+    if (fullScreen)
+    {
+        screenWidth = fullScreenWidth;
+        screenHeight = fullScreenHeight;
+    }
+
+    else
+    {
+        screenWidth = windowScreenWidth;
+        screenHeight = windowScreenHeight;
+    }
+}
 
 settings Game::ReadConf::GetSettings()
 {
-    return {screenWidth, screenHeight, fps, player1_up, player1_down, player2_up, player2_down};
+    return {screenWidth, screenHeight, fps, player1_up, player1_down, player2_up, player2_down, fullScreen};
 }

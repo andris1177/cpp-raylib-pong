@@ -30,18 +30,13 @@ target_link_libraries(pong PRIVATE raylib)
 # Set destination dir
 if (CMAKE_GENERATOR MATCHES "Visual Studio")
     set(SOUNDS_DESTINATION_DIR ${CMAKE_BINARY_DIR}/Release/sounds)
-    set(CONFIG_DESTINATION_DIR ${CMAKE_BINARY_DIR}/Release/config)
 else()
     set(SOUNDS_DESTINATION_DIR ${CMAKE_BINARY_DIR}/sounds)
-    set(CONFIG_DESTINATION_DIR ${CMAKE_BINARY_DIR}/config)
 endif()
 
 # Create the destination directories
 file(MAKE_DIRECTORY ${SOUNDS_DESTINATION_DIR})
-file(MAKE_DIRECTORY ${CONFIG_DESTINATION_DIR})
 
 # Copy the sounds folder
 file(COPY ${CMAKE_SOURCE_DIR}/sounds/ DESTINATION ${SOUNDS_DESTINATION_DIR})
 
-# Copy the game.config 
-file(COPY ${CMAKE_SOURCE_DIR}/config/game.config DESTINATION ${CONFIG_DESTINATION_DIR})

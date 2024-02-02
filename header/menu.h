@@ -8,9 +8,7 @@ namespace Game
     class Menu
     {
     private:
-        int screenWidth;
-        int screenHeight;
-        int maxFps;
+        settings setting;
         bool singlePlayer;
         bool multiPlayer;
         float buttonWidth;

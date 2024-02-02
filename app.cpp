@@ -1,11 +1,15 @@
 #include "header/pong.h"
 #include "header/menu.h"
 #include "header/readConf.h"
+#include "header/generateConfig.hpp"
 #include "header/definition.h"
 
 int main()
 {
     int gameMode = 0;
+
+    Game::GenerateConfig *generateconf = new Game::GenerateConfig();
+    delete generateconf;
 
     Game::ReadConf *readconf = new Game::ReadConf();
     settings setting = readconf->GetSettings();

@@ -13,4 +13,5 @@ typedef struct {
     int player1_down;
     int player2_up;
     int player2_down;
+    bool fullScreen;
 } settings;
