@@ -15,6 +15,12 @@ file(GLOB_RECURSE source CONFIGURE_DEPENDS "src/*.cpp")
 # Include raylib
 add_subdirectory(external/raylib)
 
+# Include raygui
+include_directories(external/raygui/src)
+
+# Include json
+include_directories(external/json/single_include/nlohmann)
+
 # Add the pong.cpp
 set(SOURCES app.cpp ${source})
 
@@ -26,17 +32,3 @@ target_include_directories(pong PRIVATE header)
 
 # Link raylib
 target_link_libraries(pong PRIVATE raylib)
-
-# Set destination dir
-if (CMAKE_GENERATOR MATCHES "Visual Studio")
-    set(SOUNDS_DESTINATION_DIR ${CMAKE_BINARY_DIR}/Release/sounds)
-else()
-    set(SOUNDS_DESTINATION_DIR ${CMAKE_BINARY_DIR}/sounds)
-endif()
-
-# Create the destination directories
-file(MAKE_DIRECTORY ${SOUNDS_DESTINATION_DIR})
-
-# Copy the sounds folder
-file(COPY ${CMAKE_SOURCE_DIR}/sounds/ DESTINATION ${SOUNDS_DESTINATION_DIR})
-
