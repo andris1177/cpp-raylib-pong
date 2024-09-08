@@ -33,3 +33,8 @@ msbuild pong.sln /p:Configuration=Release
 cd Relase
 pong.exe
 ```
+
+## for nvim use:
+``` bash
+cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ../
+```
