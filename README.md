@@ -5,6 +5,8 @@
 ``` bash
 git clone --recursive https://github.com/andris1177/cpp-raylib-pong.git
 cd cpp-raylib-pong
+git checkout dev
+git pull --recurse-submodules
 ```
 
 ## Linux
