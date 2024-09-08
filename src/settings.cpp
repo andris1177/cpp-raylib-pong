@@ -36,7 +36,7 @@ void Settings::readSettings()
 void Settings::saveSettings()
 {
     std::ofstream o("config.json");
-    o << settings;
+    o << std::setw(4) << settings << "\n";
 }
 
 void Settings::autoDetectSettings()
