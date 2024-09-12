@@ -3,6 +3,7 @@
 int main()
 {
     Pong *pong = new Pong();
+    pong->run();
     delete pong;
     return 0;
 }

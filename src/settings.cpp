@@ -42,9 +42,13 @@ void Settings::saveSettings()
 void Settings::autoDetectSettings()
 {
     InitWindow(0, 0, " ");
-    settings["resolutionX"] = GetMonitorWidth(GetCurrentMonitor());
-    settings["resolutionY"] = GetMonitorHeight(GetCurrentMonitor());
+    settings["resolutionX"] = (GetMonitorWidth(GetCurrentMonitor())/2);
+    settings["resolutionY"] = (GetMonitorHeight(GetCurrentMonitor())/2);
+    settings["resolutionXFull"] = GetMonitorWidth(GetCurrentMonitor());
+    settings["resolutionYFull"] = GetMonitorHeight(GetCurrentMonitor());
     settings["fps"] = GetMonitorRefreshRate(GetCurrentMonitor());
+    settings["Fullscreen"] = false;
+    CloseWindow();
 }
 
 Settings::~Settings()
